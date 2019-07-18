@@ -23,7 +23,28 @@
  */
 int i,j,a;
 void main() {
+    // All happy path
+    int inputTest1[15] = {5, 3, 0, 2, 6, 2, 0, 7, 2, 5}; // => false
+    int inputTest2[10] = {3, 1, 2, 3, 1, 0}; // => false
+    int inputTest3[25] = {16, 9, 9, 15, 9, 7, 9, 11, 17, 11, 4, 9, 12, 14, 14, 12, 17, 0, 3, 16}; // => true
 
+    int manipulated_arr[] = inputTest1;
+
+    // Beginning algo with input 1
+    manipulated_arr == remove_zero(manipulated_arr);
+
+    if (sizeof(manipulated_arr) == 0) {
+        printf("Havel-Hakimi exited with: false");
+    }
+
+    // Sorting
+    manipulated_arr == decending_sort(manipulated_arr);
+
+    // Prepairing for front elim
+    int N = manipulated_arr[0];
+
+    //
+    manipulated_arr == &manipulated_arr + 8;
 }
 
 
@@ -77,7 +98,6 @@ int decending_sort(int arr[]) {
 
 // Given a number N and a array, return true if N is greater than the num of answers
 // False otherwise
-// 
 bool len_check(int compare_size, int arr[]) {
     
     // Element size of the passed array
@@ -85,6 +105,8 @@ bool len_check(int compare_size, int arr[]) {
 
     if (compare_size > arr_size){
         return true;
+    } else {
+        return false;
     }
 
 }
@@ -92,14 +114,17 @@ bool len_check(int compare_size, int arr[]) {
 // Given a number N and a sequence in decing order
 // Subtract 1 from the first N numbers in the sequence 
 int front_elim(int N, int arr[]) {
-    // Element size of the passed array
+    // IDEA: Is defining a new array(returned_arr) nessissary in each function? 
+    //       Are these varibles using unneeded memory?
 
     // Creating the array to be returned
-    // IDEA: Is defining a new array(returned_arr) nessissary in each function? 
-    int arr_size = sizeof(arr) / sizeof(int);
-    int returned_arr[arr_size];
+    int returned_arr[] = arr;
 
+    // Increment over the first N items in the arrays
     for(i=0; i<N; i++){
-
+        // Decrement that value in the returned array
+        returned_arr[i] = arr[i]--;
     }
+
+    return returned_arr;
 }
