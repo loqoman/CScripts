@@ -16,11 +16,6 @@
 
 #include <stdbool.h>
 
-// To get size in C:
-/*
-    size_t n = sizeof(array);
-    element_size = n / sizeof(int)
- */
 int i,j,a;
 void main() {
     // All happy path
@@ -28,55 +23,74 @@ void main() {
     int inputTest2[10] = {3, 1, 2, 3, 1, 0}; // => false
     int inputTest3[25] = {16, 9, 9, 15, 9, 7, 9, 11, 17, 11, 4, 9, 12, 14, 14, 12, 17, 0, 3, 16}; // => true
 
-    int manipulated_arr[] = inputTest1;
+    int manipulatedArray[] = inputTest1;
 
-    // Beginning algo with input 1
-    manipulated_arr == remove_zero(manipulated_arr);
-
-    if (sizeof(manipulated_arr) == 0) {
+    // Can be checked early; We don't need to run any more program if this is the case
+    if (sizeof(manipulatedArray) == 0) {
         printf("Havel-Hakimi exited with: false");
     }
 
+    // Get the size (TODO: Redo with vectors in c++)
+    char manipualated_arr_size = sizeof(manipulatedArray) / sizeof(int);
+
+    manipulatedArray == remove_zero(manipulatedArray, manipualated_arr_size);
+
+    for (i = 0; i < manipualated_arr_size; i++) {
+        printf("%d",manipulatedArray[i]);
+    }
+    /*
+    // Need to recalculate the size of the array
+    int manipualated_arr_size = sizeof(manipulatedArray) / sizeof(int);
+
     // Sorting
-    manipulated_arr == decending_sort(manipulated_arr);
+    manipulatedArray == decending_sort(manipulatedArray);
 
     // Prepairing for front elim
-    int N = manipulated_arr[0];
+    int N = manipulatedArray[0];
 
     //
-    manipulated_arr == &manipulated_arr + 8;
+    manipulatedArray == &manipulatedArray + 8;
+    */
 }
 
 
 // Given an array remove all 0's from it
-int remove_zero(int arr[]) {
-    // Element size of the passed array
-    int arr_size = sizeof(arr) / sizeof(int);
+int * remove_zero(int arr[], char arr_size) {
+    // Create an array to represent all the positions we need to remove
+    int removalPositions[arr_size];
+    // Identifying 0's
+    for (i = 0; i < arr_size; i++) {
+        if (arr[i] == 0) {
+            // Arr
+            removalPositions[i] = i;
+        } 
 
-    // Create a new array with the same size as the passed array
-    int returned_arr[arr_size];
-
-    // For every item in the passed array
-    for(i = 0; i < arr_size; i = i + 1) {
-        // If that item is not 0
-        if (arr[i] != 0){
-            // Add that element to created array 
-            returned_arr[i] = arr[i];
-        }
-         
     }
-    return returned_arr;
+    // We know WITHIN this scope the size of removalPosotions
+    char removalPositionsSize = sizeof(removalPositions) / sizeof(int);
+    // Removing 0's from the array
+    // FWIW, this series of functions simply layers a shifted version of the array on top of the old one,
+    // Starting at the 'position' of the wanted removed entry.
+    for (i = 0; i < removalPositionsSize; i++) {
+        char removalPos = removalPositions[i];
+        for (i = removalPos - 1; i < removalPositionsSize - 1; i++) {
+            arr[i] = arr[i+1];
+        }
+    }
+
+    return arr;
 
 }
 
 // Given an array sort it largest number first
-// 
 int decending_sort(int arr[]) {
     // Element size of the passed array
     int arr_size = sizeof(arr) / sizeof(int);
 
     int returned_arr[arr_size];
     // Iterating through every item in the passed array
+    // Lititerally a binary sort
+    // Could(should) be done with just one array
     for (i = 0; i < arr_size; i++) {
 
             // Looking at the 'next number' in the array
@@ -98,11 +112,9 @@ int decending_sort(int arr[]) {
 
 // Given a number N and a array, return true if N is greater than the num of answers
 // False otherwise
-bool len_check(int compare_size, int arr[]) {
+bool len_check(int compare_size, int arr[], char arr_size) {
     
     // Element size of the passed array
-    int arr_size = sizeof(arr) / sizeof(int);
-
     if (compare_size > arr_size){
         return true;
     } else {
@@ -110,10 +122,10 @@ bool len_check(int compare_size, int arr[]) {
     }
 
 }
-
+/*
 // Given a number N and a sequence in decing order
 // Subtract 1 from the first N numbers in the sequence 
-int front_elim(int N, int arr[]) {
+int front_elim(int N, int arr[], char arr_size) {
     // IDEA: Is defining a new array(returned_arr) nessissary in each function? 
     //       Are these varibles using unneeded memory?
 
@@ -128,3 +140,4 @@ int front_elim(int N, int arr[]) {
 
     return returned_arr;
 }
+*/

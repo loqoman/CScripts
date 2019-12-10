@@ -9,5 +9,5 @@ void main() {
 };
 
 void inspectArray(char* root) {
-    fortran
+    
 }
