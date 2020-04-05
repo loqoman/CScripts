@@ -38,3 +38,16 @@ Psudo-code
             > execute command on the operand
 
 */
+// Probabbly a good idea to include some library with all the advent of code stuff in it
+#include 
+
+void main() {
+    FILE *fp;
+    FILE *targetWrite;
+    // char *charOutTest[5];
+    const char *charOut[5];
+    char i;
+    int out;
+    int numerical;
+
+}
