@@ -1,12 +1,10 @@
-/*
-Also, I found some beautiful server code that I really should read through,
-but I am writng this on a saturday night, so I probabbly wont do it.
-*/
-
+// Syntax.c:
+//      How much basic syntax elements of C can we pack into one file for future reference?
 #include <stdio.h>              //What packages to include. 
 #include <string.h>             //Needed for most string operations
                                 //Note that most every other line has to end with a ;, however the #include does not. 
 
+int Math_Do();                  //Can define a function above 
 
 int value = 7;                  //Initilazing a value
 int A;
@@ -14,18 +12,15 @@ int A;
 char name[7] = {'D','a','r','w','i','n'};   //Array that holds 7 characters. Each character can be called with name[n] where n is the position of the character that you want. 
                                             //Worthy note that to look at each character it goes as this: D = name[0], a = name[1], r = name[2], w = name[4], ect.
                                 
-int Vpointer = 50;              //to be user as a pointer to an integer
+int Vpointer = 50;              //To be user as a pointer to an integer
 
 
 const int age = 12;             //Int. Commonly called an intager. This means a number from <Insert limitations here>.
                                 //Const, never to be changed, however can still be referenced and looked at . 
 
-char grade = 'F';               //Character. 
+char grade = 'F';               //Character, takes 8 bits of memory / 1 byte of memory 
 
 void main() {                   //Every C program has to have a main function
-  
-    //Wait for a time in millisecounds.
-    delay(10000);
     
     Math_Do(value);             //Function notation.
     if (value = 10) {               //If statement.
@@ -59,6 +54,7 @@ void main() {                   //Every C program has to have a main function
          printf("Better try again\n" );     //I hope it isnt!
       default :                             //If what you are comparing does not match anything in the list than default to this. 
          printf("Invalid grade\n" );
+    }
     printf("Your grade is  %c\n", grade );              //Also, with printf you can do something called a format input
                                                         //And it will sub the %letter with the approite value. This allows you to change the print statement in real time if need be
                                                         //Website for all the potential formats:  http://www.cplusplus.com/reference/cstdio/printf/
@@ -83,12 +79,14 @@ void main() {                   //Every C program has to have a main function
         printf("The current value of A is %d\n", A) ;   //Side note that this is an example of one format, %d, which stands for intiger. You need different letters for different types of varibles
     }
         
-    printf("This is a pointer: %d\n", &Vpointer);       //printing the pointer from earlier. 
-    printf("This is my name: %s", name);
+    printf("This is a pointer: %p\n", &Vpointer);       //Printing the pointer from earlier. 
+                                                        //The '&' operator addresses a variable (returns the pointer to that variable)
+                                                        //Conversely, the '*' operator dereferences a pointer, going to the object pointed to  
+    printf("This is my name: %s\n", &name);
     /*
     Various string operations that I have not demonstrated:
     NOTE: S1 = STRING 1  AND  S2 = STRING 2. 
-        -strcopy(s1,s2)-----Copies string 1 into string 2
+        -strcpy(s1,s2)-----Copies string 2 into string 1
         -strcat(s1,s2)------Appends s2 onto the end of s1
         -strlen(s1)---------Returns the length of s1
         -strcmp(s1,s2)------Returns 0 if s1 and s2 are the same; less than 0 if s1<s2; greater than 0 if s1>s2
@@ -103,17 +101,21 @@ void main() {                   //Every C program has to have a main function
         char hair_color[20];
         char eye_color[20];
     };                           //If we wanted to assign values to these...
-    struct person Grandpah       //struct [Master struct] [Name of Master struct instance]
+    struct person Grandpah;      //struct [Master struct] [Name of Master struct instance]
     
-    strcopy("Darwin",Grandpah.Fname);
+    strcpy(Grandpah.Fname,"Darwin");
 }
-    
+
+int Math_Do(int number) {        //This is a function, in the form of: <return type> <funtion name>(input values)
+    number = number * 3;         //All the code that you want to be called by this function 
+    return 2;
+}
+
+// Whoops, this is cpp
+/*
 class Dog{                      // Name of class, should be caps
     public:                     // __init__, seem farmiliar?
         char nam;               // one character for nam
         int age;                // number for age, can be found by [name.a]
 }
-
-int Math_Do(int number){        //This is a function, in the form of: return type funtion name(input values)
-    number = number * 3;        //All the code that you want to be called by this function 
-}
+*/
