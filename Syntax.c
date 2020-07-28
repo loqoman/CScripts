@@ -12,6 +12,10 @@ int A;
 char name[7] = {'D','a','r','w','i','n'};   //Array that holds 7 characters. Each character can be called with name[n] where n is the position of the character that you want. 
                                             //Worthy note that to look at each character it goes as this: D = name[0], a = name[1], r = name[2], w = name[4], ect.
                                 
+
+char numberList[7] = {1, 2, 3, 4, 5, 6};
+char * listPointer;
+
 int Vpointer = 50;              //To be user as a pointer to an integer
 
 
@@ -75,7 +79,7 @@ void main() {                   //Every C program has to have a main function
     }while( a < 20 );
     */
     
-    for (A = 7; A < 10; A = A + 1) {
+    for (A = 7; A < 10; A = A + 1) {                    //Increment occurs at the end of the code
         printf("The current value of A is %d\n", A) ;   //Side note that this is an example of one format, %d, which stands for intiger. You need different letters for different types of varibles
     }
         
@@ -86,7 +90,7 @@ void main() {                   //Every C program has to have a main function
     /*
     Various string operations that I have not demonstrated:
     NOTE: S1 = STRING 1  AND  S2 = STRING 2. 
-        -strcpy(s1,s2)-----Copies string 2 into string 1
+        -strcpy(s1,s2)------Copies string 2 into string 1
         -strcat(s1,s2)------Appends s2 onto the end of s1
         -strlen(s1)---------Returns the length of s1
         -strcmp(s1,s2)------Returns 0 if s1 and s2 are the same; less than 0 if s1<s2; greater than 0 if s1>s2
@@ -104,6 +108,18 @@ void main() {                   //Every C program has to have a main function
     struct person Grandpah;      //struct [Master struct] [Name of Master struct instance]
     
     strcpy(Grandpah.Fname,"Darwin");
+
+    /*
+    ----------Pointer arithmatic-------------
+    */
+
+    listPointer = &numberList[2] - &numberList[1];          //listPointer should be 1, because in memeory the 2nd and 1st item of the list are right next to each other
+
+
+    printf("listPointer (pointer) is currently %p\n", listPointer);     //Printing listPointer as a pointer
+
+    printf("listPointer (char) is currently %d\n", listPointer);        //Casting listPointer to a char
+
 }
 
 int Math_Do(int number) {        //This is a function, in the form of: <return type> <funtion name>(input values)
