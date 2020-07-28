@@ -41,10 +41,13 @@ Psudo-code
 // Probabbly a good idea to include some library with all the advent of code stuff in it
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #define ADD_OPCODE 1
 #define MULT_OPCODE 2
 #define STOP_OPCODE 99
+
+void clenseCommas(), addCommand();
 
 void main() {
     FILE *fp;
@@ -53,18 +56,38 @@ void main() {
 
     const char *rawStrInput[200]; // const = read-only 
     
-    char *inputTape[200];
     char *newTape[200];
+    char *tapeLocation;
 
-    fp = fopen("input.txt","r");
+    fp = fopen("testIn.txt","r");
     targetWrite = fopen("output.txt", "w");
 
     // Getting the input tape from input.txt
     fgets(rawStrInput, 100000, fp);
     strcpy(newTape, rawStrInput);
-    printf("%s", &rawStrInput);
+    printf("%s", rawStrInput);
 
-    clenseCommas(&rawStrInput, &inputTape);
+    removeChar(rawStrInput, ',');
+
+    printf("Tape currently reads:%s\n", rawStrInput);
+    
+    /*
+    for (tapeLocation = rawStrInput; *tapeLocation != '\0'; tapeLocation+=4) {
+        switch (atoi(*tapeLocation)) {
+            case ADD_OPCODE:
+                break;
+            case MULT_OPCODE:
+                break;
+            case STOP_OPCODE:
+                break;
+            default:
+                printf("I don't recgognize this opcode!");
+        }
+    }
+    */
+    addCommand(rawStrInput, rawStrInput);
+
+    printf("Tape currently reads:%s\n", rawStrInput);
 }
 /*
 As it pertains to returning strings:
@@ -75,22 +98,41 @@ As it pertains to returning strings:
 >   2. pass a buffer to the function that gets filled in with information.*
 */
 
-void clenseCommas(char inputString[], char outputString[]) {
-    int i;
-    char stop = 0;
+// source: https://stackoverflow.com/questions/5457608/how-to-remove-the-character-at-a-given-index-from-a-string-in-c#5457726
+// Oversimplified, this method works by walking forward through the list untill we hit the null character, 
+// shifting over all the non-garbage characters, and ignoring the grabage characters
+void removeChar(char *str, char garbage) {
 
-    for (i = 0; stop = 1; i++) {
-        if (inputString[i] != ',') {
-           strcat(outputString, inputString[i]);
-           printf("%c", inputString[i]);
-        } 
-        // When we catch the error, set stop to 1 
+    char *src, *dst;    // Create two pointers to characters
+    for (src = dst = str; *src != '\0'; src++) { // At the start, set both pointers to each other, and go untill we hit the null character
+        *dst = *src;    // Replace the value at dst with the value at src
+
+        printf("%c\n", *dst); // Debugging
+        
+        if (*dst != garbage) dst++; // Increment dst, if the value at dst is not the removed character 
+                                    // Increment src (By the for loop)
     }
+    *dst = '\0';                    // Set the value at dst to the null character (effectivly terminating the string)
 }
 
+void addCommand(char *addCodelocation, char *rawStrInput) {
+    char sum = (*(addCodelocation+1) - '0') + (*(addCodelocation+2) - '0');     // What number we need to store
+
+    char *putLocation = addCodelocation+3;                  // Pointer to the char of the dumpLocation
+
+    char currentPos = rawStrInput - addCodelocation;        // Our position(W.R.T the codeLocation) in the tape as a number
+
+    signed char posDifference = *putLocation - currentPos;  // How far we need to go to get to the putLocation
+
+    char *dumpLocation = addCodelocation + posDifference;   // The pointer of the memory location we need to dump on
+
+    *dumpLocation = sum;
 
 
-void addCommand() {
+    printf("\naddCommand debug:\n");
+    printf("currentPos is: %d\n", currentPos);
+    printf("sum is: %d\n", sum);
+    printf("first Operand is: %d\n", *(addCodelocation+1) - '0');
 
 }
 
@@ -102,7 +144,21 @@ void multCommand() {
 
     printf("Size on input tape is:%lu\n", sizeof(rawStrInput) / sizeof(rawStrInput[0]));
 
+    char *src, *dst;
+    for (src = dst = str; *src != '\0'; src++) {
+        *dst = *src;
+        if (*dst != garbage) dst++;
+    }
+
+
+removeChar(foo, 'c');
+
+<dst>                          v 
+'a', 'b', 'd', 'd', 'e', 'a', '\0'
+<src>                                
+
 */
+
 
 
 
